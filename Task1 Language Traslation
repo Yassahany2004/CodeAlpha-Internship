@@ -1,0 +1,38 @@
+# CodeAlpha-Internshimport tkinter as tk
+from tkinter import ttk
+from deep_translator import GoogleTranslator
+
+def translate_text():
+    text = input_text.get("1.0", tk.END).strip()
+    target_language = lang_var.get()
+    if not text:
+        output_text.set("Please enter text.")
+        return
+    try:
+        translated = GoogleTranslator(source='auto', target=target_language).translate(text)
+        output_text.set(translated)
+    except Exception:
+        output_text.set("Translation failed.")
+
+app = tk.Tk()
+app.title("Language Translator")
+app.geometry("500x320")
+app.configure(bg='black')
+
+tk.Label(app, text="Enter text:", bg='black', fg='white').pack(pady=5)
+input_text = tk.Text(app, height=5, width=60, bg='black', fg='white', insertbackground='white')
+input_text.pack()
+
+tk.Label(app, text="Translate to:", bg='black', fg='white').pack(pady=5)
+lang_var = tk.StringVar(value='ar')
+lang_menu = ttk.Combobox(app, textvariable=lang_var, values=["en", "ar", "fr", "de", "es", "zh"])
+lang_menu.pack()
+
+translate_button = tk.Button(app, text="Translate", command=translate_text, bg='white', fg='black')
+translate_button.pack(pady=10)
+
+output_text = tk.StringVar()
+tk.Label(app, textvariable=output_text, wraplength=480, justify="left", bg='black', fg='white').pack(pady=10)
+
+app.mainloop()
+ip
